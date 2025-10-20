@@ -132,7 +132,8 @@ def get_ui():
         const preview = document.getElementById('preview');
         const toast = document.getElementById('toast');
 
-        const ws = new WebSocket(`ws://${window.location.host}/ws`);
+        const ws = new WebSocket('wss://changerapi.azurewebsites.net/ws');
+
         ws.onmessage = (event) => {
             const msg = JSON.parse(event.data);
             if (msg.type === "color") {
@@ -241,6 +242,6 @@ async def websocket_endpoint(ws: WebSocket):
 
     try:
         while True:
-            await ws.receive_text()  # not used, but keeps connection alive
+            await ws.receive_text()
     except:
         websockets.remove(ws)
